@@ -45,7 +45,6 @@ public class DataProducer {
                 // Send message to the topic and partition
                 producer.send(new ProducerRecord<>(topic, partition, null, log));
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
