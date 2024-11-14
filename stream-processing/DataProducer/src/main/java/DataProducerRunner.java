@@ -31,6 +31,7 @@ public class DataProducerRunner {
         DataProducer dataProducer = new DataProducer(producer,traceFile);
 
         dataProducer.sendData();
+        System.out.println("Streaming done");
         producer.close();
 
             
