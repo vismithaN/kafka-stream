@@ -49,6 +49,7 @@ public class DataProducer {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        producer.close();
     }
 
 }
