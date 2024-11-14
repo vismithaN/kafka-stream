@@ -1,4 +1,14 @@
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.apache.kafka.clients.producer.Producer;
+import org.apache.kafka.clients.producer.ProducerRecord;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileReader;
+
 
 public class DataProducer {
     private Producer<String, String> producer;
@@ -20,7 +30,25 @@ public class DataProducer {
         master node of your samza cluster before you make a submission.
     */
     public void sendData() {
+        try(BufferedReader br = new BufferedReader(new FileReader(traceFileName))) {
+            String log;
+            while((log = br.readLine()) != null) {
+                JsonParser parser = new JsonParser();
+                JsonElement jsonElement = parser.parse(log);
+                JsonObject json = jsonElement.getAsJsonObject();
 
+                String type = json.get("type").getAsString();
+                int blockId = json.get("blockId").getAsInt();
+                String topic = type.equals("DRIVER_LOCATION") ? "driver-locations" : "events";
+                int partition = blockId % 5;
+
+                // Send message to the topic and partition
+                producer.send(new ProducerRecord<>(topic, partition, null, log));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
