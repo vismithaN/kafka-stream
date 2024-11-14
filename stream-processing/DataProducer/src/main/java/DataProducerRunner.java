@@ -28,7 +28,7 @@ public class DataProducerRunner {
         props.put(ProducerConfig.BUFFER_MEMORY_CONFIG, "33554432");
 
         KafkaProducer<String,String> producer = new KafkaProducer<>(props);
-        Path traceFilePath = Paths.get("stream-processing", "DataProducer", "tracefile");
+        Path traceFilePath = Paths.get("tracefile");
 
         // Convert the Path to an absolute path
         String absolutePath = traceFilePath.toAbsolutePath().toString();
