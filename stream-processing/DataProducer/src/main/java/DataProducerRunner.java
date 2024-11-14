@@ -2,6 +2,8 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Properties;
 
 public class DataProducerRunner {
@@ -26,9 +28,12 @@ public class DataProducerRunner {
         props.put(ProducerConfig.BUFFER_MEMORY_CONFIG, "33554432");
 
         KafkaProducer<String,String> producer = new KafkaProducer<>(props);
+        Path traceFilePath = Paths.get("stream-processing", "DataProducer", "tracefile");
 
+        // Convert the Path to an absolute path
+        String absolutePath = traceFilePath.toAbsolutePath().toString();
         String traceFile = "tracefile";
-        DataProducer dataProducer = new DataProducer(producer,traceFile);
+        DataProducer dataProducer = new DataProducer(producer,absolutePath);
 
         dataProducer.sendData();
         System.out.println("Streaming done");
