@@ -27,7 +27,7 @@ public class DataProducerRunner {
 
         KafkaProducer<String,String> producer = new KafkaProducer<>(props);
 
-        String traceFile = "stream-processing/DataProducer/tracefile";
+        String traceFile = "./tracefile";
         DataProducer dataProducer = new DataProducer(producer,traceFile);
 
         dataProducer.sendData();
