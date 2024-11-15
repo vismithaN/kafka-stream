@@ -28,7 +28,7 @@ public class DataProducerRunner {
         props.put(ProducerConfig.BUFFER_MEMORY_CONFIG, "33554432");
 
         KafkaProducer<String,String> producer = new KafkaProducer<>(props);
-        String traceFile = "tracefile";
+        String traceFile = "trace_task2";
         DataProducer dataProducer = new DataProducer(producer,traceFile);
 
         dataProducer.sendData();
