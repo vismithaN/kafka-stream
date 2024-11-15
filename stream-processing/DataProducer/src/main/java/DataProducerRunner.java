@@ -17,7 +17,7 @@ public class DataProducerRunner {
         */
 
         Properties props = new Properties();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "172.31.40.109:9092,172.31.46.14:9092,172.31.43.170:9092");
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "172.31.37.196:9092,172.31.40.17:9092,172.31.41.251:9092");
         props.put(ProducerConfig.ACKS_CONFIG, "all");
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
