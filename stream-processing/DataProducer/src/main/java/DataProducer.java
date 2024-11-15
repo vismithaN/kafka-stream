@@ -29,9 +29,9 @@ public class DataProducer {
      master node of your samza cluster before you make a submission.
      */
     public void sendData() {
-        try(BufferedReader br = new BufferedReader(new FileReader(traceFileName))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(traceFileName))) {
             String log;
-            while((log = br.readLine()) != null) {
+            while ((log = br.readLine()) != null) {
                 JsonParser parser = new JsonParser();
                 JsonElement jsonElement = parser.parse(log);
                 JsonObject json = jsonElement.getAsJsonObject();
@@ -48,5 +48,4 @@ public class DataProducer {
             e.printStackTrace();
         }
     }
-
 }
