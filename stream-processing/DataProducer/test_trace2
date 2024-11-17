@@ -1,0 +1,4 @@
+{"blockId":45,"clientId":0,"latitude":40.6799404643263,"longitude":-73.980282552649,"type":"RIDE_REQUEST","gender_preference":"N"}
+{"userId":1,"interest":"ramen","duration":1565434,"type":"RIDER_INTEREST"}
+{"userId":3,"mood":5,"blood_sugar":4,"stress":7,"active":0,"type":"RIDER_STATUS"}
+{"driverId":131,"blockId":3214,"latitude":40.7519871,"longitude":-74.0047584,"type":"DRIVER_LOCATION"}

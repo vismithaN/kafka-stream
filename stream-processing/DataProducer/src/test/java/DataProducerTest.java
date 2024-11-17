@@ -23,49 +23,50 @@ public class DataProducerTest {
      * Additional test cases can be added by adding more entries to test_trace and verifying here.
      * @throws IOException
      */
-//    @Test
-    public void testProducer() throws IOException {
-        DataProducer dataProducer = new DataProducer(producer, "test_trace");
+
+    @Test
+    public void testProducerWithEventsTopic() throws IOException {
+        DataProducer dataProducer = new DataProducer(producer, "test_trace2");
 
         dataProducer.sendData();
 
         List<ProducerRecord<String, String>> history = producer.history();
-        Assert.assertEquals(2,history.size());
+        Assert.assertEquals(11,history.size());
 
         List<ProducerRecord<String, String>> expected = Arrays.asList(
-                new ProducerRecord<>("events", 3, null, "{\"blockId\":5648,\"type\":\"ENTERING_BLOCK\"}"),
-                new ProducerRecord<>("driver-locations", 4, null, "{\"blockId\":5649,\"type\":\"DRIVER_LOCATION\"}"));
+                new ProducerRecord<>("events", 0, null, "{\"blockId\":45,\"clientId\":0," +
+                        "\"latitude\":40.6799404643263,\"longitude\":-73.980282552649,\"type\":\"RIDE_REQUEST\"," +
+                        "\"gender_preference\":\"N\"}"),
 
-        Assert.assertEquals("Producer records not matched!", expected, history);
-    }
+                new ProducerRecord<>("events", 0, null, "{\"userId\":1,\"interest\":\"ramen\"," +
+                        "\"duration\":1565434,\"type\":\"RIDER_INTEREST\"}"),
 
-//    @Test
-    public void testProducerWithCorrectTopic() throws IOException {
-        DataProducer dataProducer = new DataProducer(producer, "test_trace1");
+                new ProducerRecord<>("events", 1, null, "{\"userId\":1,\"interest\":\"ramen\"," +
+                        "\"duration\":1565434,\"type\":\"RIDER_INTEREST\"}"),
 
-        dataProducer.sendData();
+                new ProducerRecord<>("events", 2, null, "{\"userId\":1,\"interest\":\"ramen\"," +
+                        "\"duration\":1565434,\"type\":\"RIDER_INTEREST\"}"),
 
-        List<ProducerRecord<String, String>> history = producer.history();
-        Assert.assertEquals(7,history.size());
+                new ProducerRecord<>("events", 3, null, "{\"userId\":1,\"interest\":\"ramen\"," +
+                        "\"duration\":1565434,\"type\":\"RIDER_INTEREST\"}"),
 
-        List<ProducerRecord<String, String>> expected = Arrays.asList(
-                new ProducerRecord<>("events", 2, null, "{\"blockId\":5647,\"driverId\":7806," +
-                        "\"latitude\":40.7901188,\"longitude\":-73.9747985,\"type\":\"ENTERING_BLOCK\",\"status\":\"AVAILABLE\"," +
-                        "\"rating\":2.14,\"salary\":11,\"gender\":\"F\"}"),
-                new ProducerRecord<>("events", 0, null, "{\"blockId\":1930,\"clientId\":6343," +
-                        "\"latitude\":40.731471,\"longitude\":-73.9901805,\"type\":\"RIDE_REQUEST\",\"gender_preference\":\"N\"}"),
-                new ProducerRecord<>("events", 3, null, "{\"blockId\":1113,\"driverId\":4843," +
-                        "\"latitude\":40.7182511,\"longitude\":-74.0053824,\"type\":\"ENTERING_BLOCK\",\"status\":\"UNAVAILABLE\"," +
-                        "\"rating\":3.7,\"salary\":26,\"gender\":\"M\"}"),
-                new ProducerRecord<>("events", 1, null, "{\"blockId\":6,\"driverId\":3602," +
-                        "\"latitude\":40.7014372,\"longitude\":-74.0119515,\"type\":\"LEAVING_BLOCK\",\"status\":\"UNAVAILABLE\"}"),
-                new ProducerRecord<>("events", 4, null, "{\"blockId\":1544,\"driverId\":8429," +
-                        "\"latitude\":40.7258816,\"longitude\":-73.9775455,\"type\":\"RIDE_COMPLETE\",\"gender\":\"M\",\"rating\":4.79," +
-                        "\"user_rating\":4.0,\"salary\":25}"),
-                new ProducerRecord<>("driver-locations", 4, null, "{\"driverId\":131,\"blockId\":3214," +
-                        "\"latitude\":40.7519871,\"longitude\":-74.0047584,\"type\":\"DRIVER_LOCATION\"}"),
-                new ProducerRecord<>("driver-locations", 4, null, "{\"driverId\":133,\"blockId\":3219," +
-                        "\"latitude\":49.75198581,\"longitude\":-89.06577584,\"type\":\"DRIVER_LOCATION\"}"));
+                new ProducerRecord<>("events", 4, null, "{\"userId\":1,\"interest\":\"ramen\"," +
+                        "\"duration\":1565434,\"type\":\"RIDER_INTEREST\"}"),
+
+                new ProducerRecord<>("events", 0, null, "{\"userId\":3,\"mood\":5,\"blood_sugar\":4," +
+                        "\"stress\":7,\"active\":0,\"type\":\"RIDER_STATUS\"}"),
+
+                new ProducerRecord<>("events", 1, null, "{\"userId\":3,\"mood\":5,\"blood_sugar\":4,\"stress\":7," +
+                        "\"active\":0,\"type\":\"RIDER_STATUS\"}"),
+
+                new ProducerRecord<>("events", 2, null, "{\"userId\":3,\"mood\":5,\"blood_sugar\":4," +
+                        "\"stress\":7,\"active\":0,\"type\":\"RIDER_STATUS\"}"),
+
+                new ProducerRecord<>("events", 3, null, "{\"userId\":3,\"mood\":5,\"blood_sugar\":4," +
+                        "\"stress\":7,\"active\":0,\"type\":\"RIDER_STATUS\"}"),
+
+                new ProducerRecord<>("events", 4, null, "{\"userId\":3,\"mood\":5,\"blood_sugar\":4," +
+                        "\"stress\":7,\"active\":0,\"type\":\"RIDER_STATUS\"}"));
 
         Assert.assertEquals("Producer records not matched!", expected, history);
     }
