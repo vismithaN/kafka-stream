@@ -36,21 +36,10 @@ public class DataProducer {
                 JsonElement jsonElement = parser.parse(log);
                 JsonObject json = jsonElement.getAsJsonObject();
 
-                String type = json.get("type").getAsString();
-                if(!type.equals("DRIVER_LOCATION")) {
-                    String topic = "events";
-                    if (type.equals("RIDER_STATUS") || type.equals("RIDER_INTEREST")) {
-                        // Send to all 5 partitions
-                        for (int partition = 0; partition < 5; partition++) {
-                            producer.send(new ProducerRecord<>(topic, partition, null, log));
-                        }
-                    } else if(type.equals("RIDE_REQUEST")) {
-                        // Send to specific partition based on blockId
-                        int blockId = json.get("blockId").getAsInt();
-                        int partition = blockId % 5;
-                        producer.send(new ProducerRecord<>(topic, partition, null, log));
-                    }
-                }
+                // Send to specific partition based on userID
+                int userId = json.get("userId").getAsInt();
+                int partition = userId % 5;
+                producer.send(new ProducerRecord<>("ad-click", partition, null, log));
             }
         } catch (Exception e) {
             e.printStackTrace();

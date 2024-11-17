@@ -25,48 +25,21 @@ public class DataProducerTest {
      */
 
     @Test
-    public void testProducerWithEventsTopic() throws IOException {
-        DataProducer dataProducer = new DataProducer(producer, "test_trace2");
+    public void testProducerWithAdClickTopic() throws IOException {
+        DataProducer dataProducer = new DataProducer(producer, "test_bonus");
 
         dataProducer.sendData();
 
         List<ProducerRecord<String, String>> history = producer.history();
-        Assert.assertEquals(11,history.size());
+        Assert.assertEquals(2,history.size());
 
         List<ProducerRecord<String, String>> expected = Arrays.asList(
-                new ProducerRecord<>("events", 0, null, "{\"blockId\":45,\"clientId\":0," +
-                        "\"latitude\":40.6799404643263,\"longitude\":-73.980282552649,\"type\":\"RIDE_REQUEST\"," +
-                        "\"gender_preference\":\"N\"}"),
 
-                new ProducerRecord<>("events", 0, null, "{\"userId\":1,\"interest\":\"ramen\"," +
-                        "\"duration\":1565434,\"type\":\"RIDER_INTEREST\"}"),
+                new ProducerRecord<>("ad-click", 1, null, "{\"userId\": 19036, " +
+                        "\"storeId\": \"44SY464xDHbvOcjDzRbKkQ\", \"name\": \"Ippudo NY\", \"clicked\": \"false\"}"),
 
-                new ProducerRecord<>("events", 1, null, "{\"userId\":1,\"interest\":\"ramen\"," +
-                        "\"duration\":1565434,\"type\":\"RIDER_INTEREST\"}"),
-
-                new ProducerRecord<>("events", 2, null, "{\"userId\":1,\"interest\":\"ramen\"," +
-                        "\"duration\":1565434,\"type\":\"RIDER_INTEREST\"}"),
-
-                new ProducerRecord<>("events", 3, null, "{\"userId\":1,\"interest\":\"ramen\"," +
-                        "\"duration\":1565434,\"type\":\"RIDER_INTEREST\"}"),
-
-                new ProducerRecord<>("events", 4, null, "{\"userId\":1,\"interest\":\"ramen\"," +
-                        "\"duration\":1565434,\"type\":\"RIDER_INTEREST\"}"),
-
-                new ProducerRecord<>("events", 0, null, "{\"userId\":3,\"mood\":5,\"blood_sugar\":4," +
-                        "\"stress\":7,\"active\":0,\"type\":\"RIDER_STATUS\"}"),
-
-                new ProducerRecord<>("events", 1, null, "{\"userId\":3,\"mood\":5,\"blood_sugar\":4,\"stress\":7," +
-                        "\"active\":0,\"type\":\"RIDER_STATUS\"}"),
-
-                new ProducerRecord<>("events", 2, null, "{\"userId\":3,\"mood\":5,\"blood_sugar\":4," +
-                        "\"stress\":7,\"active\":0,\"type\":\"RIDER_STATUS\"}"),
-
-                new ProducerRecord<>("events", 3, null, "{\"userId\":3,\"mood\":5,\"blood_sugar\":4," +
-                        "\"stress\":7,\"active\":0,\"type\":\"RIDER_STATUS\"}"),
-
-                new ProducerRecord<>("events", 4, null, "{\"userId\":3,\"mood\":5,\"blood_sugar\":4," +
-                        "\"stress\":7,\"active\":0,\"type\":\"RIDER_STATUS\"}"));
+                new ProducerRecord<>("ad-click", 2, null, "{\"userId\": 13617, " +
+                        "\"storeId\": \"44SY464xDHbvOcjDzRbKkQ\", \"name\": \"Ippudo NY\", \"clicked\": \"true\"}"));
 
         Assert.assertEquals("Producer records not matched!", expected, history);
     }
