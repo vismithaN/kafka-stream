@@ -44,7 +44,7 @@ public class DataProducer {
                         for (int partition = 0; partition < 5; partition++) {
                             producer.send(new ProducerRecord<>(topic, partition, null, log));
                         }
-                    } else {
+                    } else if(type.equals("RIDE_REQUEST")) {
                         // Send to specific partition based on blockId
                         int blockId = json.get("blockId").getAsInt();
                         int partition = blockId % 5;
