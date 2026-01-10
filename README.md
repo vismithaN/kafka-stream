@@ -140,7 +140,7 @@ kafka-stream/
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/vismithaN/kafka-stream.git
+git clone <repository-url>
 cd kafka-stream
 ```
 
@@ -256,6 +256,8 @@ Each line in the trace file is a JSON object representing a driver event:
 {"blockId":1021,"driverId":9089,"latitude":40.7166518,"longitude":-73.9978653,"type":"ENTERING_BLOCK","status":"AVAILABLE","rating":4.39,"salary":65,"gender":"M"}
 ```
 
+**Note**: Field order may vary in the actual trace files, as JSON parsing is order-independent.
+
 ### Event Types
 
 #### DRIVER_LOCATION
@@ -303,17 +305,21 @@ default.replication.factor=1
 
 ### Producer Configuration
 
-The DataProducer application uses the following Kafka producer settings:
+The DataProducer application requires a Kafka producer to be instantiated in the `DataProducerRunner.java` file. Example producer configuration:
 
 ```java
+// In DataProducerRunner.java - create and configure the producer
 Properties props = new Properties();
 props.put("bootstrap.servers", "localhost:9092");
 props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 props.put("acks", "all");  // Wait for all replicas to acknowledge
+
+Producer<String, String> kafkaProducer = new KafkaProducer<>(props);
+DataProducer dataProducer = new DataProducer(kafkaProducer, "tracefile");
 ```
 
-Customize these in the `DataProducerRunner.java` file as needed.
+Customize these settings in the `DataProducerRunner.java` file as needed.
 
 ## Testing
 
@@ -334,7 +340,7 @@ The test suite includes:
 1. Use the `test_trace` file for testing:
 ```bash
 # Modify DataProducerRunner.java to use test_trace instead of tracefile
-DataProducer producer = new DataProducer(kafkaProducer, "test_trace");
+DataProducer dataProducer = new DataProducer(kafkaProducer, "test_trace");
 ```
 
 2. Run the producer and verify output in Kafka topics
